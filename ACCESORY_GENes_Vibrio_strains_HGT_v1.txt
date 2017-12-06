@@ -1,0 +1,74 @@
+#########################################################################################
+#########################################################################################
+
+# FIND ACCESORY GENES IN 3 VIBRIO GENOMES
+# Related NOEMIE HGT experiment
+
+# IM- 23.oct.2017
+
+
+# example with 3 vibrio cholerae strains
+
+
+#########################################################################################
+#########################################################################################
+
+#########################################################################################
+
+################## MODIFY GENE NAME BY LOCUS TAG
+
+# extract Gene Name
+cat VC-N16961_ASM674v1_protein.gpff | grep "LOCUS"
+
+# extract Locus Tag
+cat VC-N16961_ASM674v1_protein.gpff | grep "locus_tag" | sed 's/ //g' | cut -d'=' -f2 | sed 's/"//g' | sed 's/^/>/' > VC-N16961_ASM674v1_protein.labels
+
+# Get protein .faa file
+cat VC-N16961_ASM674v1_protein.faa
+
+
+#########################
+
+# modifying labels
+
+perl ~/Documents/EPFL/Scripts/Modify_fasta_header_with_textfileheaders_v1.pl VC-N16961_ASM674v1_protein.labels VC-N16961_ASM674v1_protein.faa > VC-N16961_protein.faa
+
+
+##########################
+# blast proteins
+
+mkdir db_prot_genomes
+
+a=0;for i in $(ls *.faa); do echo $(echo $i | cut -d'_' -f1,2,3) ;makeblastdb -dbtype prot -in $i -parse_seqids -out db_prot_genomes/$(echo $i | cut -d'_' -f1,2,3)_db ; done
+
+blastp -db db_prot_genomes/VC-N16961_protein.faa_db -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastComp1_A1552_in_N16961.xml -query VC-A1552_Prokka.faa
+blastp -db db_prot_genomes/VC-A1552_Prokka.faa_db -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastComp1Recip_N16961_in_A1552.xml -query VC-N16961_protein.faa
+
+
+blastp -db db_prot_genomes/VC-N16961_protein.faa_db -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastComp2_Sa5Y_in_N16961.xml -query VC-Sa5Y_Prokka.faa
+blastp -db db_prot_genomes/VC-Sa5Y_Prokka.faa_db -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastComp2Recip_N16961_in_Sa5Y.xml -query VC-N16961_protein.faa
+
+blastp -db db_prot_genomes/VC-A1552_Prokka.faa_db -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastComp3_Sa5Y_in_A1552.xml -query VC-Sa5Y_Prokka.faa
+blastp -db db_prot_genomes/VC-Sa5Y_Prokka.faa_db -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastComp3Recip_A1552_in_Sa5Y.xml -query VC-A1552_Prokka.faa
+
+##########################
+# Filter blast 
+cat db_prot_genomes/blastComp1_A1552_in_N16961.xml | awk '$3 >79.9' 
+
+##########################
+# sorting homology
+
+sort -k2 -n db_prot_genomes/blastComp1_A1552_in_N16961.xml	
+
+
+##########################
+
+# Alignements in MAFFT
+
+java -jar ~/software/BMGE-1.12/BMGE.jar -i ALL_Aligned_mafft.pir -t AA -o ALL_MLST_MAFFT.phy
+
+
+
+# Curation of alignment with BMGE
+
+java -jar ~/software/BMGE-1.12/BMGE.jar -i ALL_Aligned_mafft.pir -t AA -o ALL_MLST_MAFFT.phy
