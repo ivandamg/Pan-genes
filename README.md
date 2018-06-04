@@ -4,6 +4,8 @@ Identification of the core-genome of a group of strains.
 
 
 # 1. Calculate the core-genes of a group of strains
+If want to find Core-genes, take only strains interested in.
+If want to make phylogeny, include an outlayer. related species.
 
 - Re anotate the genome assemblies with Prokka-1.12.
   - In local 
