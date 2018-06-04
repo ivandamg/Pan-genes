@@ -70,7 +70,7 @@ Check that all the strains have same number of proteins
      for i in $(ls Core*.faa); do echo $i; cat $i | grep ">" | wc -l; done
 
 
-#3. Phylogeny construction based on core-genes.
+# 3. Phylogeny construction based on core-genes.
 
 - Concatenate the sequences (no sequence ID.) and put all the info in a single file
 
