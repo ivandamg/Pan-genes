@@ -3,7 +3,7 @@ Identification of the core-genome of a group of strains.
 
 
 
-#1. Calculate the core-genes of a group of strains
+# 1. Calculate the core-genes of a group of strains
 
 - Re anotate the genome assemblies with Prokka-1.12.
   - In local 
@@ -25,11 +25,12 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
     # Sequencial blast
 
-      # CHECK order
+    # CHECK order
       ls -1 *.faa
       
-      
     # LOOP OVER FILES TO ADD NEW HOMOLOGS
+    
+    # modify name of first strain to ->
     cat Vibrio_cholerae_YB1A01_Prokka.faa > Core_YB1A01.faa
 
     for OTHER in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1) ;
