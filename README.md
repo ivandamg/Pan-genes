@@ -144,7 +144,7 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
         for i in $(ls Vibrio_cholerae*Prokka.faa); do cat $i | grep ">" | sed 's/ /\t/' |sed 's/>//' | cut -f1 > PanGenes/ALL_$(echo $i | cut -d'.' -f1 | cut -d'_' -f3).txt ; done
         for i in $(ls Core*.faa);do  cat $i |  grep ">" |sed 's/>//'  > PanGenes/$(echo $i | cut -d'.' -f1).txt ; done
 
-   - in R. Script with multiple functions 
+   - in R. Script with multiple functions PanGenes_Analysis_inPOP_v1.R
    
         1.  Calcul Core-genes and variable genes per pop
         2.  Correlation Non-conserved genes and phylogenetic distance
