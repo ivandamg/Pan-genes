@@ -65,6 +65,9 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
     rm *tmp*
     rm *core.txt; done;done
 
+Check that all the strains have same number of proteins
+  
+     for i in $(ls Core*.faa); do echo $i; cat $i | grep ">" | wc -l; done
 
 2. Analysis of Core-genes, Variable-genes and Pan-genes for populations of n individuals.
 
