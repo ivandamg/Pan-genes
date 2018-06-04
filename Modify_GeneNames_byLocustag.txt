@@ -1,0 +1,19 @@
+-
+-################## MODIFY GENE NAME BY LOCUS TAG
+-
+-# extract Gene Name
+-cat VC-N16961_ASM674v1_protein.gpff | grep "LOCUS"
+-
+-# extract Locus Tag
+-cat VC-N16961_ASM674v1_protein.gpff | grep "locus_tag" | sed 's/ //g' | cut -d'=' -f2 | sed 's/"//g' | sed 's/^/>/' > VC-N16961_ASM674v1_protein.labels
+-
+-# Get protein .faa file
+-cat VC-N16961_ASM674v1_protein.faa
+-
+-
+-#########################
+-
+-# modifying labels
+-
+-perl ~/Documents/EPFL/Scripts/Modify_fasta_header_with_textfileheaders_v1.pl VC-N16961_ASM674v1_protein.labels VC-N16961_ASM674v1_protein.faa > VC-N16961_protein.faa
+-
