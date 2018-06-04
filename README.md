@@ -58,14 +58,15 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
     # Core proteins of N16961
 
-    xargs faidx -d ' ' Vibrio_cholerae_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_Prokka.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1).faa
+    xargs faidx -d ' ' Acinetobacter_baumannii_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_Prokka.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1).faa
 
-    xargs faidx -d ' ' Vibrio_cholerae_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_Prokka.faa < $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
+    xargs faidx -d ' ' Acinetobacter_baumannii_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_Prokka.faa < $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
 
     # delete temp data
     rm *tmp
     rm *tmp*
     rm *core.txt; done;done
+
 
 Check that all the strains have same number of proteins
   
