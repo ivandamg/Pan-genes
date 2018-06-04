@@ -92,6 +92,8 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
 
 # 3. Analysis of core-genes by population.
 
+- Find a unique identifier for all genes in a population. Ex. reference another strain of the species (i.e N16961)
+
       #change names to a unique ID of each gene in the population
       awk '/^>/{print ">GenePool_" ++i; next}{print}' < Core_N16961.faa > GenePoolCore.fa
 
@@ -129,9 +131,25 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
       for i in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $i | cut -d'.' -f1) ;
       blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out UniqueID_ALLPOP/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_UniqueID.xml -query GenePoolCore.fa ; done 
 
-    # Put a strong filter even if this means than small proteins, and highly divergent will be discarded. better for avoid false positives.
-    for i in $(ls *.xml); do cat $i | awk '$4 >150' | awk '$3 >89.9' | wc -l ; done 
+      #Put a strong filter even if this means than small proteins, and highly divergent will be discarded. better for avoid false positives.
+      for i in $(ls *.xml); do cat $i | awk '$4 >150' | awk '$3 >89.9' | wc -l ; done 
 
-    #Look at errors!
+      #Look at errors!
+
+- Gene comparison among populations
+
+  - in bash make file of ALL genes and Core-genes per strain
+  
+        mkdir PanGenes
+        for i in $(ls Vibrio_cholerae*Prokka.faa); do cat $i | grep ">" | sed 's/ /\t/' |sed 's/>//' | cut -f1 > PanGenes/ALL_$(echo $i | cut -d'.' -f1 | cut -d'_' -f3).txt ; done
+        for i in $(ls Core*.faa);do  cat $i |  grep ">" |sed 's/>//'  > PanGenes/$(echo $i | cut -d'.' -f1).txt ; done
+
+   - in R. Script with multiple functions 
+   
+        1.  Calcul Core-genes and variable genes per pop
+        2.  Correlation Non-conserved genes and phylogenetic distance
+        3.  ACP of genes id
+        4.  SetPlot in non-conserved genes
+        5.  Presence/ absence of list of genes  in POP.
 
 
