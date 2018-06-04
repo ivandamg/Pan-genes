@@ -69,8 +69,25 @@ Check that all the strains have same number of proteins
   
      for i in $(ls Core*.faa); do echo $i; cat $i | grep ">" | wc -l; done
 
-2. Analysis of Core-genes, Variable-genes and Pan-genes for populations of n individuals.
+
+#3. Phylogeny construction based on core-genes.
+
+- Concatenate the sequences (no sequence ID.) and put all the info in a single file
+
+      for i in $(ls Core*.faa); do echo $i; cat $i | grep -v ">" ; done | sed 's/Core/>Core/g' > AllStrains_CoreGenes.faa
+
+- Align with MAFFT online 
+https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
+
+- Discard poorly aligned regions with BMGE
+
+      java -jar ~/software/BMGE-1.12/BMGE.jar -i ALLStrains_CoreGenes_MAFFT.pir -t AA -o ALLStrains_CoreGenes_MAFFT.phy
+
+- Phyml Phylogeny
+
+      bsub -q long -L /bin/bash -J Core-Genomes_PHY -u ivan.mateusgonzalez@epfl.ch -N -R "rusage[mem=60000]" -M 60000000 "module add Phylogeny/prottest/3.4.1; PhyML_3.0_linux64 -i ALLStrains_CoreGenes_MAFFT.phy -d aa -b -1 -m WAG -c 4 -a e"
+
+# 4. Analysis of Core-genes, Variable-genes and Pan-genes for populations of n individuals.
 
 
-3. Phylogeny construction based on core-genes.
-00
+
