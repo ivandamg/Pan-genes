@@ -4,6 +4,11 @@ Identification of the core-genome of a group of strains.
 1. Calculate the core-genes of a group of strains
 If want to find Core-genes, take only strains interested in.
 If want to make phylogeny, include an outlayer. related species.
+  
+- Re anotate the genome assemblies with Prokka-1.12.
+  - In local 
+  
+        for i in $(ls *NCBI.fna); do echo $i ; ~/software/prokka-1.12/prokka/bin/prokka --outdir Annotation_$(echo $i | cut -d'.' -f1) --genus Vibrio --species cholerae --strain $(echo $i | cut -d'_' -f1) --locustag VC-$(echo $i | cut -d'_' -f1) --prefix $(echo $i | cut -d'.' -f1)_Prokka --rfam --usegenus $i ; done
 
   - In cluster
 
