@@ -5,11 +5,6 @@ Identification of the core-genome of a group of strains.
 If want to find Core-genes, take only strains interested in.
 If want to make phylogeny, include an outlayer. related species.
 
-- Re anotate the genome assemblies with Prokka-1.12.
-  - In local 
-  
-        for i in $(ls *NCBI.fna); do echo $i ; ~/software/prokka-1.12/prokka/bin/prokka --outdir Annotation_$(echo $i | cut -d'.' -f1) --genus Vibrio --species cholerae --strain $(echo $i | cut -d'_' -f1) --locustag VC-$(echo $i | cut -d'_' -f1) --prefix $(echo $i | cut -d'.' -f1)_Prokka --rfam --usegenus $i ; done
-
   - In cluster
 
         for i in $(ls Vibrio*.fna); do echo $i; bsub -q normal -L /bin/bash -J $(echo $i | cut -d'_' -f3) -u ivan.mateusgonzalez@epfl.ch -n 8 -R "rusage[mem=12000]" -M 12000000 -N "module add UHTS/Analysis/prokka/1.12; module add UHTS/Analysis/rnammer/1.2; module add UHTS/Analysis/LMAT/1.2.6; module add SequenceAnalysis/HMM-Profile/hmmer/3.1b2; prokka --outdir Annotation_$(echo $i | cut -d'_' -f3) --genus Vibrio --species cholerae --strain $(echo $i | cut -d'_' -f3) --cpus 8 --locustag VC_$(echo $i | cut -d'_' -f3) --prefix $(echo $i | cut -d'_' -f1,2,3)_Prokka --rfam --usegenus $i "; done
