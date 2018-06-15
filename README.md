@@ -1,7 +1,7 @@
 # Pan-genome
 Identification of the core-genome of a group of strains.
 
-1. Calculate the core-genes of a group of strains
+# 1. Calculate the core-genes of a group of strains
 If want to find Core-genes, take only strains interested in.
 If want to make phylogeny, include an outlayer. related species.
   
@@ -72,7 +72,7 @@ Check that all the strains have same number of proteins
      for i in $(ls Core*.faa); do echo $i; cat $i | grep ">" | wc -l; done
 
 
-2. Phylogeny construction based on core-genes.
+# 2. Phylogeny construction based on core-genes.
 
 - Concatenate the sequences (no sequence ID.) and put all the info in a single file
 
@@ -89,7 +89,7 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
 
       bsub -q long -L /bin/bash -J Core-Genomes_PHY -u ivan.mateusgonzalez@epfl.ch -N -R "rusage[mem=60000]" -M 60000000 "module add Phylogeny/prottest/3.4.1; PhyML_3.0_linux64 -i ALLStrains_CoreGenes_MAFFT.phy -d aa -b -1 -m WAG -c 4 -a e"
 
-3. Analysis of core-genes by population.
+# 3. Analysis of core-genes by population.
 
 - Find a unique identifier for all genes in a population. Ex. reference another strain of the species (i.e N16961)
 
