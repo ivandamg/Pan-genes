@@ -58,7 +58,7 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
          xargs faidx -d ' ' Acinetobacter_Baumannii_$( echo $i | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $( echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$( echo $i | cut -d'/' -f2 | cut -d'_' -f1).faa
 
-         xargs faidx -d ' 'Acinetobacter_Baumannii_$( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
+         xargs faidx -d ' ' Acinetobacter_Baumannii_$( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
         echo "ok faidx";
        #delete temp data
 
