@@ -17,13 +17,13 @@ If want to make phylogeny, include an outlayer. related species.
 - Iterative blast between all the strains
 Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
-    #Rename files names Vibrio_Cholera_STAIN_BLA.fna
+   Rename files names Acinetobacter_baumannii_Isolate_BLA.fna
 
-    #create db
+     #create db
     
     a=0;for i in $(ls *.faa); do echo $(echo $i | cut -d'_' -f3) ;makeblastdb -dbtype prot -in $i -parse_seqids -out db_prot_genomes/$(echo $i | cut -d'_' -f3)_db ; done
 
-    #Sequencial blast
+   Sequencial blast
 
     #CHECK order
       ls -1 *.faa
