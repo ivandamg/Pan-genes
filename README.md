@@ -35,36 +35,36 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
        for OTHER in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1) ;
 
-       for i in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $i | cut -d'.' -f1) ;
+        for i in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $i | cut -d'.' -f1) ;
+      echo "ok";
+       blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -out db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml -query Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
+        echo "ok blast";
+        #Filter blastp 80% identity aminoacid sequence <20%
+       cat db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml | awk '$3 > 79.9' | awk '!seen[$1]++'  | awk '!seen[$2]++'  > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp
+         echo "ok filter";
+       #Filter core proteins of all strains
+         awk '{a=$8-$7;print $0,a;}' $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp2
+       awk '{a=$10-$9;print $0,a;}' $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp2 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp3
+       awk '{a=$13/$14;print $0,a;}' $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp3 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp4
+        cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp4 | awk '$15 > 0.8' | awk '$15 < 1.2' > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5
+        echo "ok AWK";
+       #extract names of sequences.
 
-        blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -out db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml -query Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
+        cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5 | cut -f2 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt
 
-         #Filter blastp 80% identity aminoacid sequence <20%
-        cat db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml | awk '$3 > 79.9' | awk '!seen[$1]++'  | awk '!seen[$2]++'  > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp
+        cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5 | cut -f1 > $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt
+        echo "ok rename";
+        #Core proteins
 
-        #Filter core proteins of all strains
-        awk '{a=$8-$7;print $0,a;}' $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp2
-        awk '{a=$10-$9;print $0,a;}' $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp2 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp3
-        awk '{a=$13/$14;print $0,a;}' $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp3 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp4
-       cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp4 | awk '$15 > 0.8' | awk '$15 < 1.2' > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5
+         xargs faidx -d ' ' Acinetobacter_Baumannii_$( echo $i | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $( echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$( echo $i | cut -d'/' -f2 | cut -d'_' -f1).faa
 
-        #extract names of sequences.
+         xargs faidx -d ' 'Acinetobacter_Baumannii_$( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$( echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
+        echo "ok faidx";
+       #delete temp data
 
-       cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5 | cut -f2 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt
-
-       cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5 | cut -f1 > $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt
-
-       #Core proteins
-
-        xargs faidx -d ' ' Acinetobacter_baumannii_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1).faa
-
-        xargs faidx -d ' ' Acinetobacter_baumannii_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_miseqAssembly.faa < $(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
-
-        #delete temp data
-    
-       rm *tmp
-        rm *tmp*
-        rm *core.txt; done;done
+        rm *tmp
+       rm *tmp*
+       rm *core.txt; done;done
 
 
 Check that all the strains have same number of proteins
