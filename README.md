@@ -37,7 +37,7 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
     for i in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $i | cut -d'.' -f1) ;
 
-    blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml -query Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
+    blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -out db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml -query Core_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1).faa
 
     #Filter blastp 80% identity aminoacid sequence <20%
     cat db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_$(echo $OTHER | cut -d'/' -f2 | cut -d'_' -f1)core.xml | awk '$3 > 79.9' | awk '!seen[$1]++'  | awk '!seen[$2]++'  > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp
