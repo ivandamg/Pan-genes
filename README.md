@@ -21,7 +21,7 @@ Filter blastp 80% identity.  difference in length of the sequence max. 20%
 
      #create db
     
-    a=0;for i in $(ls *.faa); do echo $(echo $i | cut -d'_' -f3) ;makeblastdb -dbtype prot -in $i -parse_seqids -out db_prot_genomes/$(echo $i | cut -d'_' -f3)_db ; done
+        a=0;for i in $(ls *.faa); do echo $(echo $i | cut -d'_' -f3) ;makeblastdb -dbtype prot -in $i -parse_seqids -out db_prot_genomes/$(echo $i | cut -d'_' -f3)_db ; done
 
    Sequencial blast
 
