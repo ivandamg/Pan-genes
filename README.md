@@ -83,7 +83,7 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
 
 - Discard poorly aligned regions with BMGE
 
-      java -jar ~/software/BMGE-1.12/BMGE.jar -i ALLStrains_CoreGenes_MAFFT.pir -t AA -o ALLStrains_CoreGenes_MAFFT.phy
+      java -jar ../Documents/software/BMGE-1.12/BMGE.jar -i ALLStrains_CoreGenes_MAFFT.pir -t AA -o ALLStrains_CoreGenes_MAFFT.phy
 
 - Phyml Phylogeny
 
