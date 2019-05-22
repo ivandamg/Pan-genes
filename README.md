@@ -115,8 +115,8 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
       cat $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.tmp5 | cut -f2 > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt
 
       #Core proteins 
-      xargs faidx -v -d ' ' Vibrio_cholerae_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_Prokka.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt >> GenePoolCore.fa; 
-      xargs faidx -v -d ' ' Vibrio_cholerae_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_Prokka.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_CONTROL.fa; 
+      xargs faidx -v -d ' ' *_*_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_*.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt >> GenePoolCore.fa; 
+      xargs faidx -v -d ' ' *_*_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_*.faa < $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_core.txt > $(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_CONTROL.fa; 
 
       #delete temp data
       rm *tmp
