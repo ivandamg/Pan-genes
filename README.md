@@ -99,7 +99,7 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
 
       #Get unique sequences 
       for i in $(ls db_prot_genomes/*_db.pin) ; do echo $(echo $i | cut -d'.' -f1) ;
-      blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -max_hsps 20 -num_threads 30 -out db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_GenePoolCore.xml -query GenePoolCore.fa
+      blastp -db $(echo $i | cut -d'.' -f1) -outfmt 6 -evalue 1e-8 -show_gis -num_alignments 1 -out db_prot_genomes/blastProt_$(echo $i | cut -d'/' -f2 | cut -d'_' -f1)_in_GenePoolCore.xml -query GenePoolCore.fa
 
 
       #Filter blastp 80% identity aminoacid sequence <20%
