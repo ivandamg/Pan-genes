@@ -124,7 +124,7 @@ https://mafft.cbrc.jp/alignment/server/cgi-bin/mafft5-lsf.cgi
       rm *core.txt; done
 
       #change names ID to unique ID
-      awk '/^>/{print ">GenePool_" ++i; next}{print}' < GenePoolCore.fa > GenePoolCore.fa
+      awk '/^>/{print ">GenePool_" ++i; next}{print}' < GenePoolCore.fa >GenePoolCore_v2.fa
 
       #Blast each strain to the GenePool to get good ID.
 
